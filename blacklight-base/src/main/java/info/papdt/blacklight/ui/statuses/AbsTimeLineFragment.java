@@ -177,53 +177,80 @@ SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.Heade
 		// Listener
 		//mAllowHidingActionBar = false;
 		if (getActivity() instanceof MainActivity) {
-			mAdapter.addOnScrollListener(new RecyclerView.OnScrollListener() {
-				@Override
-				public void onScrolled(RecyclerView view, int dx, int dy) {
-					int deltaY = -dy;
-					boolean shouldShow = deltaY > 0;
-					if (shouldShow != mFABShowing) {
-						if (shouldShow) {
-							showFAB();
-						} else {
-							hideFAB();
+			mList.getViewTreeObserver().addOnGlobalLayoutListener(
+					new ViewTreeObserver.OnGlobalLayoutListener() {
+						@Override
+						public void onGlobalLayout() {
+							if (mList.computeVerticalScrollOffset() == 0) {
+							} else {
+								if (mManager.findFirstVisibleItemPosition() == 0) {
+									mTranslationY = -mList.computeVerticalScrollOffset();
+
+									if (mTranslationY < -mHeaderHeight) {
+										mTranslationY = -mHeaderHeight;
+									} else if (mTranslationY > 0) {
+										mTranslationY = 0;
+									}
+
+									View header = mAdapter.getHeaderView();
+									mHeaderFactor = Math.abs(mTranslationY) / (float) header.getHeight();
+
+								} else {
+									mHeaderFactor = 1f;
+								}
+
+								((MainActivity) getActivity()).updateHeaderTranslation(mHeaderFactor);
+//								mList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+							}
 						}
-					}
-
-					if (mManager.findFirstVisibleItemPosition() == 0) {
-
-						if ((mTranslationY > -mHeaderHeight && deltaY < 0)
-							|| (mTranslationY < 0 && deltaY > 0)) {
-
-							mTranslationY += deltaY;
-						}
-
-						if (mTranslationY < -mHeaderHeight) {
-							mTranslationY = -mHeaderHeight;
-						} else if (mTranslationY > 0) {
-							mTranslationY = 0;
-						}
-
-						View header = mAdapter.getHeaderView();
-						mHeaderFactor = Math.abs(mTranslationY) / (float) header.getHeight();
-
-					} else {
-						mHeaderFactor = 1f;
-					}
-
-					((MainActivity) getActivity()).updateHeaderTranslation(mHeaderFactor);
-
-					if (getActivity() instanceof MainActivity) {
-
-
-						//updateTranslation();
-						updateMargins(deltaY);
-					}
-
-					mFABShowing = shouldShow;
-					mLastY = dy;
-				}
-			});
+					});
+//			mAdapter.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//				@Override
+//				public void onScrolled(RecyclerView view, int dx, int dy) {
+//					int deltaY = -dy;
+//					boolean shouldShow = deltaY > 0;
+//					if (shouldShow != mFABShowing) {
+//						if (shouldShow) {
+//							showFAB();
+//						} else {
+//							hideFAB();
+//						}
+//					}
+//
+//					if (mManager.findFirstVisibleItemPosition() == 0) {
+//
+//						if ((mTranslationY > -mHeaderHeight && deltaY < 0)
+//							|| (mTranslationY < 0 && deltaY > 0)) {
+//
+//							mTranslationY += deltaY;
+//						}
+//
+//						if (mTranslationY < -mHeaderHeight) {
+//							mTranslationY = -mHeaderHeight;
+//						} else if (mTranslationY > 0) {
+//							mTranslationY = 0;
+//						}
+//
+//						View header = mAdapter.getHeaderView();
+//						mHeaderFactor = Math.abs(mTranslationY) / (float) header.getHeight();
+//
+//					} else {
+//						mHeaderFactor = 1f;
+//					}
+//
+//					((MainActivity) getActivity()).updateHeaderTranslation(mHeaderFactor);
+//
+//					if (getActivity() instanceof MainActivity) {
+//
+//
+//						//updateTranslation();
+//						updateMargins(deltaY);
+//					}
+//
+//					mFABShowing = shouldShow;
+//					mLastY = dy;
+//				}
+//			});
 		}
 
 		final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mScroller.getLayoutParams();
