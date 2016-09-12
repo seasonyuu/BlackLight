@@ -81,7 +81,7 @@
 		<activity
 			android:label="@string/login"
 			android:name="info.papdt.blacklight.ui.login.LoginActivity"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>
@@ -95,6 +95,7 @@
 			android:launchMode="singleTask"
 			android:name="info.papdt.blacklight.ui.main.MainActivity"
 			android:screenOrientation="portrait"
+			android:windowSoftInputMode="adjustPan"
 			android:theme="@style/BL.Theme.Light.WithNav">
 			<intent-filter>
 				<category
@@ -129,7 +130,7 @@
 		<activity
 			android:label="@string/user_info"
 			android:name="info.papdt.blacklight.ui.statuses.UserTimeLineActivity"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>
@@ -141,7 +142,7 @@
 		<activity
 			android:label="@string/user_info"
 			android:name="info.papdt.blacklight.ui.statuses.UserProfileActivity"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>
@@ -153,7 +154,7 @@
 		<activity
 			android:label="@string/single_info"
 			android:name="info.papdt.blacklight.ui.statuses.SingleActivity"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>
@@ -165,7 +166,7 @@
 		<activity
 			android:label="@string/new_post"
 			android:name="info.papdt.blacklight.ui.statuses.NewPostActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize|stateVisible">
 			<intent-filter>
 				<category
@@ -188,7 +189,7 @@
 		<activity
 			android:label="@string/repost"
 			android:name="info.papdt.blacklight.ui.statuses.RepostActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize|stateVisible">
 			<intent-filter>
 				<category
@@ -201,7 +202,7 @@
 		<activity
 			android:label="@string/comment_on"
 			android:name="info.papdt.blacklight.ui.comments.CommentOnActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize|stateVisible">
 			<intent-filter>
 				<category
@@ -214,7 +215,7 @@
 		<activity
 			android:label="@string/reply_to"
 			android:name="info.papdt.blacklight.ui.comments.ReplyToActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize|stateVisible">
 			<intent-filter>
 				<category
@@ -227,7 +228,7 @@
 		<activity
 			android:label="@string/topics_info"
 			android:name="info.papdt.blacklight.ui.search.TopicsActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize">
 			<intent-filter>
 				<category
@@ -240,7 +241,7 @@
 		<activity
 			android:label="@string/donation"
 			android:name="info.papdt.blacklight.ui.settings.DonationActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize">
 			<intent-filter>
 				<category
@@ -253,7 +254,7 @@
 		<activity
 			android:label="@string/license"
 			android:name="info.papdt.blacklight.ui.settings.LicenseActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize">
 			<intent-filter>
 				<category
@@ -266,7 +267,7 @@
 		<activity
 			android:label="@string/developers_title"
 			android:name="info.papdt.blacklight.ui.settings.DevelopersActivity"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>
@@ -278,7 +279,7 @@
 		<activity
 			android:label="@string/following"
 			android:name="info.papdt.blacklight.ui.friendships.FriendsActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize">
 			<intent-filter>
 				<category
@@ -291,7 +292,7 @@
 		<activity
 			android:label="@string/direct_message"
 			android:name="info.papdt.blacklight.ui.directmessage.DirectMessageConversationActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize">
 			<intent-filter>
 				<category
@@ -304,7 +305,7 @@
 		<activity
 			android:label="@string/fb"
 			android:name="info.papdt.blacklight.ui.feedback.FeedbackActivity"
-			android:theme="@style/BL.Theme.Light.Translucent"
+			android:theme="@style/BL.Theme.Light"
 			android:windowSoftInputMode="adjustResize">
 			<intent-filter>
 				<category
@@ -317,7 +318,7 @@
 		<activity
 			android:label="@string/multiple_pictures"
 			android:name="info.papdt.blacklight.ui.common.MultiPicturePicker"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>
@@ -329,7 +330,7 @@
 		<activity
 			android:label="@string/search"
 			android:name="info.papdt.blacklight.ui.search.SearchActivity"
-			android:theme="@style/BL.Theme.Light.Translucent">
+			android:theme="@style/BL.Theme.Light">
 			<intent-filter>
 				<category
 					android:name="android.intent.category.DEFAULT"/>

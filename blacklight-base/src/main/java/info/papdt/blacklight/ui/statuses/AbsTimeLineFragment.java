@@ -47,8 +47,7 @@ import info.papdt.blacklight.ui.common.TouchPassView;
 import info.papdt.blacklight.ui.main.MainActivity;
 
 public abstract class AbsTimeLineFragment<T extends HeaderViewAdapter> extends Fragment implements
-SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.HeaderProvider
-{
+		SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.HeaderProvider {
 
 	private static final String TAG = AbsTimeLineFragment.class.getSimpleName();
 
@@ -105,17 +104,25 @@ SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.Heade
 
 	// abstract methods
 	protected abstract T buildAdapter();
+
 	protected abstract void onCreateCache();
+
 	protected abstract void loadFromCache();
+
 	protected abstract int getCacheSize();
+
 	protected abstract void cacheLoadNew(boolean param);
+
 	protected abstract int getCurrentItemCount();
+
 	protected abstract void initTitle();
-	protected void onDataLoaded() {}
+
+	protected void onDataLoaded() {
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
+	                         Bundle savedInstanceState) {
 
 		mActionBar = ((ToolbarActivity) getActivity()).getSupportActionBar();
 		mToolbar = ((ToolbarActivity) getActivity()).getToolbar();
@@ -166,7 +173,7 @@ SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.Heade
 			View target = ((MainActivity) getActivity()).getTabsView();
 			View header = new TouchPassView(getActivity(), target);
 			RecyclerView.LayoutParams p = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
-																		Utility.getDecorPaddingTop(getActivity()));
+					Utility.getDecorPaddingTop(getActivity()));
 			header.setLayoutParams(p);
 			mAdapter.setHeaderView(header);
 			mSwipeRefresh.setProgressViewOffset(false, 0, (int) ((p.height + Utility.dp2px(getActivity(), 20)) * 1.2));
@@ -200,57 +207,57 @@ SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.Heade
 								}
 
 								((MainActivity) getActivity()).updateHeaderTranslation(mHeaderFactor);
-//								mList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+								mList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 							}
 						}
 					});
-//			mAdapter.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//				@Override
-//				public void onScrolled(RecyclerView view, int dx, int dy) {
-//					int deltaY = -dy;
-//					boolean shouldShow = deltaY > 0;
-//					if (shouldShow != mFABShowing) {
-//						if (shouldShow) {
-//							showFAB();
-//						} else {
-//							hideFAB();
-//						}
-//					}
-//
-//					if (mManager.findFirstVisibleItemPosition() == 0) {
-//
-//						if ((mTranslationY > -mHeaderHeight && deltaY < 0)
-//							|| (mTranslationY < 0 && deltaY > 0)) {
-//
-//							mTranslationY += deltaY;
-//						}
-//
-//						if (mTranslationY < -mHeaderHeight) {
-//							mTranslationY = -mHeaderHeight;
-//						} else if (mTranslationY > 0) {
-//							mTranslationY = 0;
-//						}
-//
-//						View header = mAdapter.getHeaderView();
-//						mHeaderFactor = Math.abs(mTranslationY) / (float) header.getHeight();
-//
-//					} else {
-//						mHeaderFactor = 1f;
-//					}
-//
-//					((MainActivity) getActivity()).updateHeaderTranslation(mHeaderFactor);
-//
-//					if (getActivity() instanceof MainActivity) {
-//
-//
-//						//updateTranslation();
-//						updateMargins(deltaY);
-//					}
-//
-//					mFABShowing = shouldShow;
-//					mLastY = dy;
-//				}
-//			});
+			mAdapter.addOnScrollListener(new RecyclerView.OnScrollListener() {
+				@Override
+				public void onScrolled(RecyclerView view, int dx, int dy) {
+					int deltaY = -dy;
+					boolean shouldShow = deltaY > 0;
+					if (shouldShow != mFABShowing) {
+						if (shouldShow) {
+							showFAB();
+						} else {
+							hideFAB();
+						}
+					}
+
+					if (mManager.findFirstVisibleItemPosition() == 0) {
+
+						if ((mTranslationY > -mHeaderHeight && deltaY < 0)
+								|| (mTranslationY < 0 && deltaY > 0)) {
+
+							mTranslationY += deltaY;
+						}
+
+						if (mTranslationY < -mHeaderHeight) {
+							mTranslationY = -mHeaderHeight;
+						} else if (mTranslationY > 0) {
+							mTranslationY = 0;
+						}
+
+						View header = mAdapter.getHeaderView();
+						mHeaderFactor = Math.abs(mTranslationY) / (float) header.getHeight();
+
+					} else {
+						mHeaderFactor = 1f;
+					}
+
+					((MainActivity) getActivity()).updateHeaderTranslation(mHeaderFactor);
+
+					if (getActivity() instanceof MainActivity) {
+
+
+						//updateTranslation();
+						updateMargins(deltaY);
+					}
+
+					mFABShowing = shouldShow;
+					mLastY = dy;
+				}
+			});
 		}
 
 		final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mScroller.getLayoutParams();
@@ -452,13 +459,13 @@ SwipeRefreshLayout.OnRefreshListener, MainActivity.Refresher, MainActivity.Heade
 		// view
 		v.removeViewInLayout(mList);
 		v.addView(mSwipeRefresh, ViewGroup.LayoutParams.MATCH_PARENT,
-				  ViewGroup.LayoutParams.MATCH_PARENT);
+				ViewGroup.LayoutParams.MATCH_PARENT);
 		mSwipeRefresh.addView(mList, ViewGroup.LayoutParams.MATCH_PARENT,
-							  ViewGroup.LayoutParams.MATCH_PARENT);
+				ViewGroup.LayoutParams.MATCH_PARENT);
 
 		mSwipeRefresh.setOnRefreshListener(this);
 		mSwipeRefresh.setColorScheme(R.color.ptr_green, R.color.ptr_orange,
-									 R.color.ptr_red, R.color.ptr_blue);
+				R.color.ptr_red, R.color.ptr_blue);
 	}
 
 	public void hideFAB() {
