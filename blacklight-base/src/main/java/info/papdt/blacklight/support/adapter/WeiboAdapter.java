@@ -269,7 +269,6 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 
 		if (msg.inSingleActivity) {
 			h.popup.setVisibility(View.GONE);
-			h.itemView.setOnLongClickListener(null);
 		}
 
 		if (msg.user != null) {
@@ -573,7 +572,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			Utility.bindOnClick(this, avatar, "showUser");
 			Utility.bindOnClick(this, card, "show");
 			Utility.bindOnClick(this, origin_parent, "showOrig");
-			Utility.bindOnLongClick(this, card, "popupLongClick");
+//			Utility.bindOnLongClick(this, card, "popupLongClick");
 
 			// Card
 			card.setUseCompatPadding(true);
