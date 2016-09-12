@@ -35,51 +35,64 @@
 		android:layout_height="match_parent"
 		android:background="@color/dim_gray"/>
 
-	<LinearLayout
-		android:id="@+id/my_account"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical"
-		android:gravity="center">
 
-		<de.hdodenhof.circleimageview.CircleImageView
-			android:id="@+id/my_avatar"
-			android:layout_width="70dp"
-			android:layout_height="70dp"
-			android:src="@color/gray"/>
-
-	</LinearLayout>
-	
 	<RelativeLayout
 		android:id="@+id/account_switch"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="56dp"
 		android:layout_alignParentBottom="true"
+		android:background="?android:attr/selectableItemBackground"
 		android:clickable="true"
-		android:background="?android:attr/selectableItemBackground">
-		
+		android:paddingBottom="8dp"
+		android:theme="@style/Theme.AppCompat">
+
+		<TextView
+			android:id="@+id/account_description"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_toLeftOf="@+id/account_switch_icon"
+			android:maxLines="1"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp"
+			android:textColor="?android:textColorSecondary"
+			android:textSize="14sp"/>
+
 		<TextView
 			android:id="@+id/account_name"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
+			android:layout_above="@id/account_description"
 			android:layout_toLeftOf="@+id/account_switch_icon"
-			android:layout_margin="15dp"
-			android:textColor="@color/white"
-			android:textSize="15sp"
-			android:ellipsize="end"/>
-		
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp"
+			android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+			android:textColor="?android:textColorPrimary"
+			android:textSize="14sp"/>
+
 		<ImageView
 			android:id="@+id/account_switch_icon"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
+			android:layout_alignParentBottom="true"
 			android:layout_alignParentRight="true"
-			android:layout_margin="10dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
 			android:scaleType="centerInside"
 			android:src="@drawable/ic_arrow_drop_down_white_24dp"/>
-		
+
 	</RelativeLayout>
 
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/my_avatar"
+		android:layout_width="64dp"
+		android:layout_height="64dp"
+		android:layout_above="@id/account_switch"
+		android:layout_marginBottom="8dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
+		android:src="@color/gray"/>
 </RelativeLayout>
 

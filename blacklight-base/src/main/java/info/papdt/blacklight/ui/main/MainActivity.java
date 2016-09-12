@@ -84,12 +84,12 @@ import info.papdt.blacklight.ui.statuses.UserTimeLineActivity;
 import static info.papdt.blacklight.BuildConfig.DEBUG;
 
 /* Main Container Activity */
-public class MainActivity extends ToolbarActivity implements View.OnClickListener, View.OnLongClickListener
-{
+public class MainActivity extends ToolbarActivity implements View.OnClickListener, View.OnLongClickListener {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	public static interface Refresher {
 		void doRefresh();
+
 		void goToTop();
 	}
 
@@ -99,11 +99,11 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 	public static final int REQUEST_LOGIN = 2333;
 	public static final int HOME = 0,
-							COMMENT = 1,
-							MENTION = 2,
-							MENTION_CMT = 3,
-							DM = 4,
-							FAV = 5;
+			COMMENT = 1,
+			MENTION = 2,
+			MENTION_CMT = 3,
+			DM = 4,
+			FAV = 5;
 
 	private static final String BILATERAL = "bilateral";
 
@@ -116,6 +116,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 	// Drawer content
 	private View mDrawerWrapper;
 	private TextView mName;
+	private TextView mDescription;
 	private View mAccountSwitch, mAccountSwitchIcon;
 	private ImageView mAvatar;
 	private ImageView mCover;
@@ -127,12 +128,12 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 	// Fragments
 	private Fragment[] mFragments = new Fragment[]{
-		new HomeTimeLineFragment(),
-		new CommentTimeLineFragment(),
-		new MentionsTimeLineFragment(),
-		new CommentMentionsTimeLineFragment(),
-		new DirectMessageUserFragment(),
-		new FavListFragment()
+			new HomeTimeLineFragment(),
+			new CommentTimeLineFragment(),
+			new MentionsTimeLineFragment(),
+			new CommentMentionsTimeLineFragment(),
+			new DirectMessageUserFragment(),
+			new FavListFragment()
 	};
 	private GroupFragment mGroupFragment = new GroupFragment();
 	private MultiUserFragment mMultiUserFragment = new MultiUserFragment();
@@ -177,6 +178,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 		mDrawer = Utility.findViewById(this, R.id.drawer);
 		mDrawerWrapper = Utility.findViewById(this, R.id.drawer_wrapper);
 		mName = Utility.findViewById(this, R.id.account_name);
+		mDescription = Utility.findViewById(this, R.id.account_description);
 		mAvatar = Utility.findViewById(this, R.id.my_avatar);
 		mCover = Utility.findViewById(this, R.id.my_cover);
 		mPager = Utility.findViewById(this, R.id.main_pager);
@@ -248,13 +250,13 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 		// Initialize toolbar custom view
 		mTopWrapper.setAlpha(0f);
-		final Drawable[] pageIcons = new Drawable[] {
-			getResources().getDrawable(R.drawable.ic_drawer_home),
-			getResources().getDrawable(R.drawable.ic_drawer_comment),
-			getResources().getDrawable(R.drawable.ic_drawer_at),
-			getResources().getDrawable(R.drawable.ic_drawer_at),
-			getResources().getDrawable(R.drawable.ic_drawer_pm),
-			getResources().getDrawable(R.drawable.ic_drawer_fav)
+		final Drawable[] pageIcons = new Drawable[]{
+				getResources().getDrawable(R.drawable.ic_drawer_home),
+				getResources().getDrawable(R.drawable.ic_drawer_comment),
+				getResources().getDrawable(R.drawable.ic_drawer_at),
+				getResources().getDrawable(R.drawable.ic_drawer_at),
+				getResources().getDrawable(R.drawable.ic_drawer_pm),
+				getResources().getDrawable(R.drawable.ic_drawer_fav)
 		};
 
 		mToolbarTabs.setIconAdapter(new SlidingTabLayout.TabIconAdapter() {
@@ -391,12 +393,12 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 		// Initialize FAB
 		mFAB = new FloatingActionButton.Builder(this)
-			.withGravity(Gravity.BOTTOM | Gravity.RIGHT)
-			.withPaddings(0, 0, 16, 16)
-			.withDrawable(Utility.getFABNewIcon(this))
-			.withButtonColor(Utility.getFABBackground(this))
-			.withButtonSize(56 + 16)
-			.create();
+				.withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+				.withPaddings(0, 0, 16, 16)
+				.withDrawable(Utility.getFABNewIcon(this))
+				.withButtonColor(Utility.getFABBackground(this))
+				.withButtonSize(56 + 16)
+				.create();
 		mFAB.setOnClickListener(this);
 		mFAB.setOnLongClickListener(this);
 
@@ -414,11 +416,11 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 		// Drawer Groups
 		getFragmentManager().beginTransaction()
-			.add(R.id.drawer_group, mGroupFragment)
-			.add(R.id.drawer_group, mMultiUserFragment)
-			.show(mGroupFragment)
-			.hide(mMultiUserFragment)
-			.commit();
+				.add(R.id.drawer_group, mGroupFragment)
+				.add(R.id.drawer_group, mMultiUserFragment)
+				.show(mGroupFragment)
+				.hide(mMultiUserFragment)
+				.commit();
 
 		updateSplashes();
 
@@ -497,7 +499,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 	}
 
 	@Override
-	protected void onResume(){
+	protected void onResume() {
 		super.onResume();
 
 		// Dirty fix strange focus
@@ -519,7 +521,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 	}
 
 	@Override
-	protected void onNewIntent(Intent i){
+	protected void onNewIntent(Intent i) {
 		setIntent(i);
 	}
 
@@ -562,7 +564,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu){
+	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
 		mGroupDestroy.setVisible(true);
@@ -588,7 +590,8 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 	public void updateHeaderTranslation(float factor) {
 
-		if (mWrapperHeight == 0) return; // DO NOT allow call to this if the height is not measured yet.
+		if (mWrapperHeight == 0)
+			return; // DO NOT allow call to this if the height is not measured yet.
 
 		mTopWrapper.setAlpha(factor);
 		mToolbar.setAlpha(1 - factor);
@@ -674,41 +677,41 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 			return true;
 		} else if (item.getItemId() == R.id.group_destroy) {
 			new AlertDialog.Builder(this)
-				.setMessage(R.string.confirm_delete)
-				.setCancelable(true)
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						new GroupDeleteTask().execute();
-					}
-				})
-				.show();
+					.setMessage(R.string.confirm_delete)
+					.setCancelable(true)
+					.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							new GroupDeleteTask().execute();
+						}
+					})
+					.show();
 			return true;
 		} else if (item.getItemId() == R.id.group_create) {
 			final EditText text = new EditText(this);
 			new AlertDialog.Builder(this)
-				.setTitle(R.string.group_create)
-				.setCancelable(true)
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						new GroupCreateTask().execute(text.getText().toString().trim());
-					}
-				})
-				.setView(text)
-				.show();
+					.setTitle(R.string.group_create)
+					.setCancelable(true)
+					.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							new GroupCreateTask().execute(text.getText().toString().trim());
+						}
+					})
+					.setView(text)
+					.show();
 			return true;
 		} else if (item.getItemId() == R.id.search) {
 			mSearchBox.clearSearchable();
@@ -726,7 +729,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 	@Override
 	public void onBackPressed() {
-		if(mDrawer.isDrawerOpen(mDrawerGravity)){
+		if (mDrawer.isDrawerOpen(mDrawerGravity)) {
 			mDrawer.closeDrawer(mDrawerGravity);
 		} else {
 			super.onBackPressed();
@@ -754,12 +757,12 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 			mSetting.setVisibility(View.GONE);
 			mMultiUser.setVisibility(View.VISIBLE);
 			getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-				.hide(mGroupFragment).show(mMultiUserFragment).commit();
+					.hide(mGroupFragment).show(mMultiUserFragment).commit();
 		} else {
 			mSetting.setVisibility(View.VISIBLE);
 			mMultiUser.setVisibility(View.GONE);
 			getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-				.hide(mMultiUserFragment).show(mGroupFragment).commit();
+					.hide(mMultiUserFragment).show(mGroupFragment).commit();
 		}
 
 		mDrawerState = !mDrawerState;
@@ -859,6 +862,10 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 				case 0:
 					// Show user name
 					mName.setText(mUser != null ? mUser.getName() : "");
+					mDescription.setText(mUser != null ?
+							(mUser.description.length() > 24 ?
+									mUser.description.substring(0, 24) + "..." : mUser.description)
+							: "");
 					break;
 				case 1:
 					// Show avatar

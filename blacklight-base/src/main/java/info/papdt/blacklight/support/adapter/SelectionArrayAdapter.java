@@ -23,9 +23,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
-public class SelectionArrayAdapter<T> extends ArrayAdapter<T>
-{
+import info.papdt.blacklight.R;
+import info.papdt.blacklight.support.Utility;
+
+public class SelectionArrayAdapter<T> extends ArrayAdapter<T> {
 	private int mSelection = -1;
 	private int mSelectorColor = -1;
 
@@ -38,6 +41,15 @@ public class SelectionArrayAdapter<T> extends ArrayAdapter<T>
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = super.getView(position, convertView, parent);
 
+		ImageView icon = Utility.findViewById(v, R.id.group_icon);
+		if (getItem(position).equals(
+				getContext().getResources().getString(R.string.group_all))) {
+			icon.setImageResource(R.drawable.ic_action_home);
+		} else if (getItem(position).equals(
+				getContext().getResources().getString(R.string.group_bilateral))) {
+			icon.setImageResource(R.drawable.ic_action_friends);
+		} else
+			icon.setImageDrawable(null);
 		if (v == null)
 			return null;
 
