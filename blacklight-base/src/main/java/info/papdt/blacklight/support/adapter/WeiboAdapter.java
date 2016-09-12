@@ -29,10 +29,13 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.TintContextWrapper;
 import android.text.TextUtils;
 import android.view.*;
 import android.widget.*;
+
 import com.squareup.picasso.Picasso;
+
 import info.papdt.blacklight.R;
 import info.papdt.blacklight.api.attitudes.AttitudesApi;
 import info.papdt.blacklight.api.comments.NewCommentApi;
@@ -68,7 +71,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 		@Override
 		public void onClick(View v) {
 			ActivityOptionsCompat o = ActivityOptionsCompat
-				.makeSceneTransitionAnimation((Activity) v.getContext(), v, "model");
+					.makeSceneTransitionAnimation((Activity) ((TintContextWrapper) v.getContext()).getBaseContext(), v, "model");
 			MessageModel msg = (MessageModel) v.getTag(TAG_MSG);
 			int id = Integer.parseInt(v.getTag(TAG_ID).toString());
 			Intent i = new Intent();
@@ -76,7 +79,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			i.setClass(v.getContext(), StatusImageActivity.class);
 			i.putExtra("model", msg);
 			i.putExtra("defaultId", id);
-			ActivityCompat.startActivity((Activity) v.getContext(), i, o.toBundle());
+			ActivityCompat.startActivity((Activity) ((TintContextWrapper) v.getContext()).getBaseContext(), i, o.toBundle());
 		}
 	};
 
@@ -187,7 +190,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			for (int i = 0; i < 9; i++) {
 				int rowId = i / 3;
 				int picId = i % 3;
-				View view = ((LinearLayout)h.pics.getChildAt(rowId)).getChildAt(picId);
+				View view = ((LinearLayout) h.pics.getChildAt(rowId)).getChildAt(picId);
 				if (i < picCount) {
 					view.setTag(TAG_ID, i);
 					view.setOnClickListener(sImageListener);
@@ -271,10 +274,10 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 		if (msg.user != null) {
 			// Load avatar
 			Picasso.with(v.getContext())
-				.load(msg.user.profile_image_url)
-				.fit()
-				.centerCrop()
-				.into(h.avatar);
+					.load(msg.user.profile_image_url)
+					.fit()
+					.centerCrop()
+					.into(h.avatar);
 		}
 
 		//new ImageDownloader().execute(v);
@@ -284,10 +287,10 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 		}*/
 	}
 
-	private boolean willLoadPic(MessageModel msg){
+	private boolean willLoadPic(MessageModel msg) {
 		boolean hasPic = (msg.thumbnail_pic != null || msg.pic_urls.size() > 0);
 		boolean preferToShow = !(mAutoNoPic && !isWIFI) || msg.inSingleActivity;
-		return  hasPic && preferToShow;
+		return hasPic && preferToShow;
 	}
 
 	private void bindOrig(ViewHolder h, MessageModel msg, boolean showPic) {
@@ -322,7 +325,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 				int rowId = i / 3;
 				int picId = i % 3;
 
-				ImageView iv = (ImageView) ((LinearLayout)container.getChildAt(rowId)).getChildAt(picId);
+				ImageView iv = (ImageView) ((LinearLayout) container.getChildAt(rowId)).getChildAt(picId);
 
 				String url = null;
 				if (msg.hasMultiplePictures()) {
@@ -332,10 +335,10 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 				}
 
 				Picasso.with(iv.getContext())
-					.load(url)
-					.fit()
-					.centerCrop()
-					.into(iv);
+						.load(url)
+						.fit()
+						.centerCrop()
+						.into(iv);
 
 				iv.setTag(TAG_MSG, msg);
 			}
@@ -455,7 +458,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 		}
 	}
 
-	private class LikeTask extends AsyncTask<Object, Void, Boolean>{
+	private class LikeTask extends AsyncTask<Object, Void, Boolean> {
 		private MessageModel mm;
 		private ViewHolder h;
 		private Menu m;
@@ -465,20 +468,20 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			mm = (MessageModel) params[0];
 			h = (ViewHolder) params[1];
 			m = (Menu) params[2];
-			if (mm.liked){
+			if (mm.liked) {
 				return AttitudesApi.cancelLike(mm.id);
-			}else{
+			} else {
 				return AttitudesApi.like(mm.id);
 			}
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result){
-			if (result && mm == h.msg){
-				if(mm.liked){
-					-- mm.attitudes_count;
-				}else{
-					++ mm.attitudes_count;
+		protected void onPostExecute(Boolean result) {
+			if (result && mm == h.msg) {
+				if (mm.liked) {
+					--mm.attitudes_count;
+				} else {
+					++mm.attitudes_count;
 				}
 				mm.liked = !mm.liked;
 
@@ -547,7 +550,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			orig_content = Utility.findViewById(origin_parent, R.id.weibo_content);
 			avatar = Utility.findViewById(v, R.id.weibo_avatar);
 			popup = Utility.findViewById(v, R.id.weibo_popup);
-			if(viewType >= 10) {
+			if (viewType >= 10) {
 				pics = Utility.findViewById(origin_parent, R.id.weibo_pics);
 				TableLayout tmpPics = Utility.findViewById(v, R.id.weibo_pics);
 				tmpPics.setVisibility(View.GONE);
@@ -597,8 +600,8 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 
 		@Binded
 		void show() {
-			if (!(msg instanceof CommentModel)){
-				if(msg.inSingleActivity){
+			if (!(msg instanceof CommentModel)) {
+				if (msg.inSingleActivity) {
 					return;
 				}
 			}
@@ -614,8 +617,8 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			}
 
 			ActivityOptionsCompat o =
-				ActivityOptionsCompat.makeSceneTransitionAnimation(
-					(Activity) context, card, "msg");
+					ActivityOptionsCompat.makeSceneTransitionAnimation(
+							(Activity) context, card, "msg");
 
 			ActivityCompat.startActivity((Activity) context, i, o.toBundle());
 		}
@@ -635,14 +638,14 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 			}
 
 			ActivityOptionsCompat o =
-				ActivityOptionsCompat.makeSceneTransitionAnimation(
-				(Activity) context, origin_parent, "msg");
+					ActivityOptionsCompat.makeSceneTransitionAnimation(
+							(Activity) context, origin_parent, "msg");
 
 			ActivityCompat.startActivity((Activity) context, i, o.toBundle());
 		}
 
 		void repost() {
-			if(!(msg instanceof CommentModel)) {
+			if (!(msg instanceof CommentModel)) {
 				Intent i = new Intent();
 				i.setAction(Intent.ACTION_MAIN);
 				i.setClass(context, RepostActivity.class);
@@ -672,21 +675,21 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 
 		void delete() {
 			new AlertDialog.Builder(context)
-				.setMessage(R.string.confirm_delete)
-				.setCancelable(true)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						new DeleteTask(context).execute(msg);
-					}
-				})
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.dismiss();
-					}
-				})
-				.show();
+					.setMessage(R.string.confirm_delete)
+					.setCancelable(true)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							new DeleteTask(context).execute(msg);
+						}
+					})
+					.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					})
+					.show();
 		}
 
 	}
