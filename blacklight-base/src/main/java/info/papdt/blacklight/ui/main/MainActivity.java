@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -52,7 +53,6 @@ import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
 import java.util.List;
-import java.util.Random;
 
 import info.papdt.blacklight.R;
 import info.papdt.blacklight.api.friendships.GroupsApi;
@@ -67,7 +67,6 @@ import info.papdt.blacklight.support.Settings;
 import info.papdt.blacklight.support.Utility;
 import info.papdt.blacklight.ui.comments.CommentMentionsTimeLineFragment;
 import info.papdt.blacklight.ui.comments.CommentTimeLineFragment;
-import info.papdt.blacklight.ui.common.FloatingActionButton;
 import info.papdt.blacklight.ui.common.SlidingTabLayout;
 import info.papdt.blacklight.ui.common.SlidingTabStrip;
 import info.papdt.blacklight.ui.common.ToolbarActivity;
@@ -193,6 +192,7 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 		mAccountSwitch = Utility.findViewById(this, R.id.account_switch);
 		mAccountSwitchIcon = Utility.findViewById(this, R.id.account_switch_icon);
 		mSearchBox = Utility.findViewById(this, R.id.main_search);
+		mFAB = Utility.findViewById(this, R.id.main_fab);
 
 		final String[] pages = getResources().getStringArray(R.array.main_tabs);
 		mPager.setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
@@ -367,7 +367,6 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
 				invalidateOptionsMenu();
-				hideFAB();
 			}
 
 			@Override
@@ -392,13 +391,6 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 		//new GroupsTask().execute();
 
 		// Initialize FAB
-		mFAB = new FloatingActionButton.Builder(this)
-				.withGravity(Gravity.BOTTOM | Gravity.RIGHT)
-				.withPaddings(0, 0, 16, 16)
-				.withDrawable(Utility.getFABNewIcon(this))
-				.withButtonColor(Utility.getFABBackground(this))
-				.withButtonSize(56 + 16)
-				.create();
 		mFAB.setOnClickListener(this);
 		mFAB.setOnLongClickListener(this);
 
@@ -804,11 +796,11 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 	}
 
 	public void hideFAB() {
-		mFAB.hideFloatingActionButton();
+		mFAB.hide();
 	}
 
 	public void showFAB() {
-		mFAB.showFloatingActionButton();
+		mFAB.show();
 	}
 
 	public void setShowSpinner(boolean show) {
