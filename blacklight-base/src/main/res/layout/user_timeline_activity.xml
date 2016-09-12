@@ -210,7 +210,7 @@
 						android:layout_marginRight="5dp"
 						android:layout_weight="0.4"
 						android:clickable="true"
-						android:background="@drawable/drawer_selector"
+						android:background="?selectableItemBackground"
 						android:gravity="center"
 						android:orientation="horizontal">
 
