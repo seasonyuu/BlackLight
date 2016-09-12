@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,8 +57,7 @@ import info.papdt.blacklight.ui.friendships.FriendsActivity;
 
 import static info.papdt.blacklight.BuildConfig.DEBUG;
 
-public class UserTimeLineActivity extends AbsActivity
-{
+public class UserTimeLineActivity extends AbsActivity {
 	private UserTimeLineFragment mFragmentAll;
 	private UserTimeLineFragment mFragmentOrig;
 	private UserModel mModel;
@@ -251,6 +251,7 @@ public class UserTimeLineActivity extends AbsActivity
 		i.setClass(this, FriendsActivity.class);
 		startActivity(i);
 	}
+
 	@Binded
 	public void viewFollowers() {
 		Intent i = new Intent();
@@ -280,45 +281,19 @@ public class UserTimeLineActivity extends AbsActivity
 	public void showOrHideInfo() {
 		mDesScroll.clearAnimation();
 
-		AlphaAnimation anim = null;
-
 		final int start = mDesScroll.getVisibility();
 
 		if (start == View.VISIBLE) {
-			mDesScroll.setAlpha(0.5f);
-			anim = new AlphaAnimation(0.5f, 0.0f);
-		} else {
-			mDesScroll.setAlpha(0.5f);
-			mDesScroll.setVisibility(View.VISIBLE);
-			anim = new AlphaAnimation(0.0f, 0.5f);
-		}
-
-		anim.setDuration(400);
-		anim.setFillAfter(true);
-		anim.setFillBefore(false);
-
-		anim.setAnimationListener(new Animation.AnimationListener() {
-			@Override
-			public void onAnimationEnd(Animation anim) {
-				mDesScroll.clearAnimation();
-				if (start == View.VISIBLE) {
+			ViewCompat.animate(mDesScroll).alpha(0).setDuration(200).withEndAction(new Runnable() {
+				@Override
+				public void run() {
 					mDesScroll.setVisibility(View.GONE);
-				} else {
-					mDesScroll.setVisibility(View.VISIBLE);
 				}
-			}
-
-			@Override
-			public void onAnimationStart(Animation anim) {
-			}
-
-			@Override
-			public void onAnimationRepeat(Animation anim) {
-			}
-		});
-
-		mDesScroll.setAnimation(anim);
-		anim.start();
+			}).start();
+		} else {
+			mDesScroll.setVisibility(View.VISIBLE);
+			ViewCompat.animate(mDesScroll).alpha(0.5f).setDuration(200).start();
+		}
 	}
 
 	private void resetFollowState() {
@@ -360,7 +335,7 @@ public class UserTimeLineActivity extends AbsActivity
 		}
 
 		@Override
-		protected Void doInBackground(Void ... params) {
+		protected Void doInBackground(Void... params) {
 			GroupListModel groupList = GroupsApi.getGroups();
 			groups = new GroupModel[groupList.getSize()];
 			titles = new String[groupList.getSize()];
@@ -382,27 +357,27 @@ public class UserTimeLineActivity extends AbsActivity
 
 			// New dialog
 			new AlertDialog.Builder(UserTimeLineActivity.this)
-			.setTitle(getResources().getString(R.string.change_group))
-			.setMultiChoiceItems(titles, checked, new DialogInterface.OnMultiChoiceClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					checked[which] = isChecked;
-				}
-			})
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-					new GroupChanger().execute(groups, checked);
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			})
-			.show();
+					.setTitle(getResources().getString(R.string.change_group))
+					.setMultiChoiceItems(titles, checked, new DialogInterface.OnMultiChoiceClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+							checked[which] = isChecked;
+						}
+					})
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							new GroupChanger().execute(groups, checked);
+						}
+					})
+					.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.show();
 		}
 	}
 
@@ -418,7 +393,7 @@ public class UserTimeLineActivity extends AbsActivity
 		}
 
 		@Override
-		protected Void doInBackground(Object ... params) {
+		protected Void doInBackground(Object... params) {
 			GroupModel[] groups = (GroupModel[]) params[0];
 			boolean[] checked = (boolean[]) params[1];
 
@@ -442,7 +417,7 @@ public class UserTimeLineActivity extends AbsActivity
 
 	private class Follower extends AsyncTask<Void, Void, Void> {
 		@Override
-		protected Void doInBackground(Void ... params) {
+		protected Void doInBackground(Void... params) {
 			if (mModel.following) {
 				FriendsApi.unfollow(mModel.id);
 			} else {
@@ -464,16 +439,16 @@ public class UserTimeLineActivity extends AbsActivity
 	private class Downloader extends AsyncTask<Void, Object, Void> {
 
 		@Override
-		protected Void doInBackground(Void ... params) {
+		protected Void doInBackground(Void... params) {
 			// Avatar
 			Bitmap avatar = mCache.getLargeAvatar(mModel);
-			publishProgress(new Object[] {0, avatar});
+			publishProgress(new Object[]{0, avatar});
 
 			// Cover
 			if (!mModel.getCover().trim().equals("")) {
 				Bitmap cover = mCache.getCover(mModel);
 				if (cover != null) {
-					publishProgress(new Object[] {1, cover});
+					publishProgress(new Object[]{1, cover});
 				}
 			}
 
@@ -485,23 +460,23 @@ public class UserTimeLineActivity extends AbsActivity
 		}
 
 		@Override
-		protected void onProgressUpdate(Object ... values) {
+		protected void onProgressUpdate(Object... values) {
 			super.onProgressUpdate(values);
 
 			switch (Integer.parseInt(String.valueOf(values[0]))) {
-			case 0:
-				if (mAvatar != null) {
-					mAvatar.setImageBitmap((Bitmap) values[1]);
-				}
-				break;
-			case 1:
-				if (mCover != null) {
-					mCover.setImageBitmap((Bitmap) values[1]);
-				}
-				break;
-			case 2:
-				resetFollowState();
-				break;
+				case 0:
+					if (mAvatar != null) {
+						mAvatar.setImageBitmap((Bitmap) values[1]);
+					}
+					break;
+				case 1:
+					if (mCover != null) {
+						mCover.setImageBitmap((Bitmap) values[1]);
+					}
+					break;
+				case 2:
+					resetFollowState();
+					break;
 			}
 		}
 	}
