@@ -268,7 +268,7 @@ public class SingleActivity extends AbsActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == android.R.id.home) {
-			finish();
+			onBackPressed();
 			return true;
 		/*} else if (id == R.id.comment_on) {
 			commentOn();
