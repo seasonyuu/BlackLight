@@ -243,7 +243,9 @@
 					android:layout_alignParentLeft="true"
 					android:layout_marginBottom="10dp"
 					android:layout_marginLeft="10dp"
-					android:src="@color/gray"/>
+					android:src="@color/gray"
+					app:border_color="@color/grey_300"
+					app:border_width="1dp"/>
 
 			</RelativeLayout>
 
