@@ -269,6 +269,7 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 
 		if (msg.inSingleActivity) {
 			h.popup.setVisibility(View.GONE);
+			h.itemView.setOnLongClickListener(null);
 		}
 
 		if (msg.user != null) {
@@ -616,11 +617,12 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 				i.putExtra("msg", msg);
 			}
 
-			ActivityOptionsCompat o =
-					ActivityOptionsCompat.makeSceneTransitionAnimation(
-							(Activity) context, card, "msg");
-
-			ActivityCompat.startActivity((Activity) context, i, o.toBundle());
+//			ActivityOptionsCompat o =
+//					ActivityOptionsCompat.makeSceneTransitionAnimation(
+//							(Activity) context, card, "msg");
+//
+//			ActivityCompat.startActivity((Activity) context, i, o.toBundle());
+			ActivityCompat.startActivity((Activity) context, i, null);
 		}
 
 		@Binded
@@ -637,11 +639,12 @@ public class WeiboAdapter extends HeaderViewAdapter<WeiboAdapter.ViewHolder> {
 				i.putExtra("msg", ((CommentModel) msg).status);
 			}
 
-			ActivityOptionsCompat o =
-					ActivityOptionsCompat.makeSceneTransitionAnimation(
-							(Activity) context, origin_parent, "msg");
-
-			ActivityCompat.startActivity((Activity) context, i, o.toBundle());
+//			ActivityOptionsCompat o =
+//					ActivityOptionsCompat.makeSceneTransitionAnimation(
+//							(Activity) context, origin_parent, "msg");
+//
+//			ActivityCompat.startActivity((Activity) context, i, o.toBundle());
+			ActivityCompat.startActivity((Activity) context, i, null);
 		}
 
 		void repost() {
