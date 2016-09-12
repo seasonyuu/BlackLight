@@ -734,11 +734,16 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
 	@Binded
 	public void settings() {
-		Intent i = new Intent();
-		i.setAction(Intent.ACTION_MAIN);
-		i.setClass(this, SettingsActivity.class);
-		startActivity(i);
 		openOrCloseDrawer();
+		mDrawer.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				Intent i = new Intent();
+				i.setAction(Intent.ACTION_MAIN);
+				i.setClass(mDrawer.getContext(), SettingsActivity.class);
+				startActivity(i);
+			}
+		}, 200); // for Draw close animation duration
 	}
 
 	@Binded
